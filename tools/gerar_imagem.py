@@ -63,8 +63,13 @@ def main():
             pg = b.new_page(viewport={"width": w, "height": h})
             pg.set_content(pagina(w, h, a.titulo, a.chamada, a.selo, a.tema, cor, rod))
             destino = out if a.og else out.with_name(f"{out.name}-{nome}.png")
-            pg.screenshot(path=str(destino)); pg.close()
+            pg.screenshot(path=str(destino))
             print(destino)
+            if not a.og:  # Instagram só aceita JPEG
+                jpg = out.with_name(f"{out.name}-{nome}.jpg")
+                pg.screenshot(path=str(jpg), type="jpeg", quality=90)
+                print(jpg)
+            pg.close()
         b.close()
 
 if __name__ == "__main__":
